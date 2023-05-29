@@ -1,7 +1,7 @@
 #include <string.h>
 #include <fstream>
 #include <iostream>
-#include <ao/ao.h>
+//#include <ao/ao.h>
 
 #include <opus/opus.h>
 #include <sys/time.h>
@@ -18,7 +18,7 @@
 #define CHANNELS 2
 #define FRAMESIZE (RATE * CHANNELS * 2 * FRAMELEN / 1000)
 
-ao_device* ao_driver_init(int rate);
+//ao_device* ao_driver_init(int rate);
 
 int main() {
 
@@ -138,28 +138,5 @@ int main() {
     fclose(fp); // 关闭文件
     //ao_close(player);
     return 0;
-}
-
-ao_device* ao_driver_init(int rate) {
-    ao_device* device;
-    ao_sample_format format;
-    int default_driver;
-
-    ao_initialize();
-
-    /* -- Setup for default driver -- */
-    default_driver = ao_default_driver_id();
-    std::cout<<"default_driver="<<default_driver<<std::endl;
-
-    memset(&format, 0, sizeof(format));
-    format.bits = BITS;
-    format.channels = 1;
-    format.rate = rate;
-    std::cout << "ao rate is " << rate << std::endl;
-    format.byte_format = AO_FMT_LITTLE;
-    //format.matrix="L,R";
-    device = ao_open_live(default_driver, &format, NULL /* no options */);
-
-    return device;
 }
 
